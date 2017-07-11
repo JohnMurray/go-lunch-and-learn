@@ -18,8 +18,8 @@ wget https://storage.googleapis.com/golang/go1.8.3.darwin-amd64.tar.gz   # Mac
 wget https://storage.googleapis.com/golang/go1.8.3.linux-amd64.tar.gz    # Linux
 
 # install to /usr/local
-sudo tar -C /usr/local -xzf go1.8.3.linux-amd64.tar.gz   # Mac
-sudo tar -C /usr/local -xzf go1.8.3.darwin-amd64.tar.gz  # Linux
+sudo tar -C /usr/local -xzf go1.8.3.darwin-amd64.tar.gz  # Mac
+sudo tar -C /usr/local -xzf go1.8.3.linux-amd64.tar.gz   # Linux
 ```
 
 ## Setup the Workspace

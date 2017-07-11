@@ -1,12 +1,20 @@
-# Intro to Go
+# Welcome to Go!
+
+This document/repo contains all the goodness we need to run our "learn Go" lunch-and-learn.
+We eat, we learn, we Go.
 
 ## Pre-Req to Lunch and Learn
 
   - [Install Go](./install_go.md)
+  - Order tasty lunch!
 
 ## Language Overview
 
+Before we dive into code, let's do a short, high-level overview of the language and some of it's
+important features and/or characteristics.
+
   - C style, systems programming language
+  - Go is kinda-sort OOP, but not really and people will tell you it's not
   - source builds (no linking), generates a static binary
   - compiled to machine code
   - garbage collected
@@ -15,6 +23,9 @@
     - diagram CSP and channels
   - typed, type inference
 
-## Speed Tour
+## Learn Ya'll Some Go
 
-[here](./speed_tour.md)
+Our goal is to make it as far down this list as possible.
+
+  - `01.` [Speed Tour](./speed_tour.md)
+  - `02.` [Hello World](./hello_world.md)
