@@ -1,151 +1,250 @@
 # Speed Tour
 
-Borrowed from: https://github.com/kelseyhightower/intro-to-go-workshop/blob/master/speed_tour.md
+Originally borrowed from: [this workshop by Kelsey Hightower][workshop]
 
 ## Packages
 
-    import(
-       "fmt"
-       "log"
+```go
+import(
+   "fmt"
+   "log"
 
-       "github.com/kelseyhightower/targz"
-    )
+   "github.com/kelseyhightower/targz"
+   short "github.com/someone/with-a-really-long-package-name"
+   _ "runtime/pprof"
+)
+```
+
+- stdlib packages have no path
+- import paths match repositories - central to dep-mgmnt in Go
+- alias packages
+- side-effecting imports
+
 
 ## Variables
 
-	var (
-		name     string
-		Location = "Portland"
-	)
+```go
+var (
+  name     string         // package private
+  Location = "Portland"   // package exported
+)
 
-	func main() {
-		name = "Kelsey Hightower"
-		distro := "CoreOS"
-		fmt.Printf("Name: %s\nLocation: %s\nDistro: %s\n", name, Location, distro)
-	}
+func main() {
+  name = "Kelsey Hightower"
+  distro := "CoreOS"
+  fmt.Printf("Name: %s\nLocation: %s\nDistro: %s\n", name, Location, distro)
+}
+```
+
+- postfix type declarations
+- exported vs non-exported names
+- `=` vs `:=` declaration/assignment - tyep inference
 
 
 ## Arrays
 
-    func main() {
-		locations := [3]string{
-    		"Long Beach",
-    		"Atlanta",
-    		"Portland",
-    	} 
-    	fmt.Printf("Number of locations: %d", len(locations))
-    }
+```go
+func main() {
+  locations := [3]string{
+    "Long Beach",
+    "Atlanta",
+    "Portland",
+  } 
+  fmt.Printf("Number of locations: %d", len(locations))
+}
+```
+
+- fixed size, size part of type
+- non-growable, like c-arrays
 
 ## Slices
 
-	func main() {
-		locations := []string{
-			"Long Beach",
-			"Atlanta",
-			"Portland",
-			"New York",
-			"Denver",
-			"Dallas",
-		}
-		for _, name := range locations {
-			fmt.Printf("Name: %s\n", name)
-		}
+```go
+func main() {
+  locations := []string{
+    "Long Beach",
+    "Atlanta",
+    "Portland",
+    "New York",
+    "Denver",
+    "Dallas",
+  }
+  for _, name := range locations {
+    fmt.Printf("Name: %s\n", name)
+  }
 
-		middleTwo := locations[2:4]
-		fmt.Printf("%#v", middleTwo)
+  middleTwo := locations[2:4]
+  fmt.Printf("%#v", middleTwo)
 
-        ints := make([]int, 0)
-    	for i := 0; i <= 100; i++ {
-    		ints = append(ints, i)
-		}
-    	fmt.Printf("%#v", ints)
-	}
+    ints := make([]int, 0)
+    for i := 0; i <= 100; i++ {
+      ints = append(ints, i)
+  }
+    fmt.Printf("%#v", ints)
+}
+```
+
+- array backed
+- "view" of underlying
+- length vs capacity
+- still fixed capacity (by underlying)
+- variable length
 
 
 ## Maps
 
-    func main() {
-		m := make(map[string]string)
-		m["name"] = "Kelsey"
+```go
+func main() {
+	m := make(map[string]string)
+	m["name"] = "Kelsey"
 
-		name, ok := m["name"]
-		if !ok {
-			log.Fatal("Name does not exist")
-		}
-		fmt.Println(name)
+	name, ok := m["name"]
+	if !ok {
+		log.Fatal("Name does not exist")
+	}
+	fmt.Println(name)
 
-		for k, v := range m {
-			fmt.Printf("Key: %s Value: %s", k, v)
-		}
-    }
+  if name, ok = m["name"]; ok {
+    fmt.Println(name)
+  }
+
+	for k, v := range m {
+		fmt.Printf("Key: %s Value: %s", k, v)
+	}
+}
+```
+
+- no generics, except for map
+- variable return
+- flexible `if`
+- range is a magical unicorn (!use w/ user-types)
+
+## For, the only control-flow you could ever need
+
+```go
+// infinite
+for {}
+
+// while
+blah := true
+for blah {
+  fmt.Println("runs as long as 'blah' is true")
+  blah = false
+}
+
+// do-while
+value := 0
+for {
+  value += 1
+  if value > 5 {
+    break
+  }
+}
+
+// for over array
+stuffs := [string] { "one", "two", "three" }
+for i := range stuffs {
+  fmt.Println(stuffs[i])
+}
+
+// for each
+for _, v := range stuffs {
+  fmt.Println(v)
+}
+```
 
 ## Functions
 
-    func ping(url string) bool {
-		resp, err := http.Get(string)
-		if err != nil {
-			return false
-		}
-		if resp.StatusCode != http.StatusOK {
-			return false
-		}
-		return true
-    }
+```go
+func ping(url string) bool {
+  resp, err := http.Get(string)
+  if err != nil {
+    return false
+  }
+  if resp.StatusCode != http.StatusOK {
+    return false
+  }
+  return true
+}
+```
+
+- post-fix return type
+- no implicit return (not scala)
+- avoid return from else-block
 
 ## Structs
 
-	type Person struct {
-		name     string
-		Location string
-	}
+```go
+type Person struct {
+  name     string
+  Location string
+}
 
-	func NewPerson(name string) *Person {
-		p := Person{
-			name: name,
-		}
-		return &p
-	}
+func NewPerson(name string) *Person {
+  p := Person{
+    name: name,
+  }
+  return &p
+}
 
-	func (p *Person) Name() string {
-		return p.name
-	}
+func (p *Person) Name() string {
+  return p.name
+}
 
-	func (p *Person) SetName(name string) {
-		p.name = name
-	}
+func (p *Person) SetName(name string) {
+  p.name = name
+}
 
-	func main() {
-		p := NewPerson("Kelsey")
-		fmt.Printf("Name: %s\n", p.Name())
+func main() {
+  p := NewPerson("Kelsey")
+  fmt.Printf("Name: %s\n", p.Name())
 
-		p.Location = "Portland"
-		fmt.Printf("Location: %s\n", p.Location)
-	}
+  p.Location = "Portland"
+  fmt.Printf("Location: %s\n", p.Location)
+}
+```
+
+- `&` returns a pointer to an object
+- `*` is a pointer type
+- `NewPerson` dangling reference? NOPE! Escape analysis FTW!
+- stack vs heap vs golang
+- `new(Type)` is a thing - don't use it
 
 ## Channels and Goroutines
 
-	func doubler(input, output chan int) {
-		for {
-			i := <-input
-			output <- i * 2
-		}
-	}
+```go
+func doubler(input, output chan int) {
+  for {
+    i := <-input
+    output <- i * 2
+  }
+}
 
-	func printer(output chan int) {
-		for {
-			fmt.Printf("%d\n", <-output)
-		}
-	}
+func printer(output chan int) {
+  for {
+    fmt.Printf("%d\n", <-output)
+  }
+}
 
-	func main() {
-		input := make(chan int)
-		output := make(chan int)
+func main() {
+  input := make(chan int)
+  output := make(chan int)
 
-		go doubler(input, output)
-		go printer(output)
+  go doubler(input, output)
+  go printer(output)
 
-		for i := 0; i <= 10; i++ {
-			input <- i
-		}
-		time.Sleep(time.Duration(1) * time.Second)
-	}
+  for i := 0; i <= 10; i++ {
+    input <- i
+  }
+  time.Sleep(time.Duration(1) * time.Second)
+}
+```
+
+- channels used between go-routines
+- channels are typed
+- `go` starts  new go-routine
+- never sleep or busy-wait in `main` (read empty channel, or `runtime.Goexit()`)
+
+
+
+  [workshop]: https://github.com/kelseyhightower/intro-to-go-workshop/blob/master/speed_tour.md

@@ -37,3 +37,8 @@ go run hello.go
 ```
 
 For the rest of the lunch-and-learn, you should cheat. It's faster.
+
+
+## Super-Cheat
+
+Open new [Playground](https://play.golang.org) window. Press __Run__. Done.

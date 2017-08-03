@@ -5,7 +5,7 @@ We eat, we learn, we Go.
 
 ## Pre-Req to Lunch and Learn
 
-  - [Install Go](./install_go.md)
+  - [Install Go](./install_go.md) *or* use the [Playground](https://play.golang.org)
   - Order tasty lunch!
 
 ## Language Overview
@@ -18,6 +18,7 @@ important features and/or characteristics.
   - source builds (no linking), generates a static binary
   - compiled to machine code
   - garbage collected
+    - no differentiation of heap vs stack
   - runtime, but no virtual machine or dependencies
   - green thread, CSP style concurrency
     - diagram CSP and channels
@@ -29,3 +30,6 @@ Our goal is to make it as far down this list as possible.
 
   - `01.` [Speed Tour](./speed_tour.md)
   - `02.` [Hello World](./hello_world.md)
+  - `03.` [Ping Pong]
+  - `04.` [Web Server]
+  - `05.` [Delve](./delve_debugging.md)
