@@ -1,5 +1,6 @@
 # binary files
 answers/hello
+answers/pingpong
 
 # editor files
 *.swp
